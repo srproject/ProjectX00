@@ -1,0 +1,163 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:baselineAligned="false">
+
+
+
+
+
+    <ImageView
+        android:id="@+id/imageView0"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:src="@mipmap/hero" />
+
+
+
+
+    <TextView
+        android:text="35"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="130dp"
+        android:layout_width="110dp"
+        android:layout_height="30dp"
+        android:id="@+id/postn"
+        android:textStyle="bold"
+        android:textSize="11pt"
+        />
+    <TextView
+        android:text="POSTS"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:layout_marginRight="130dp"
+        android:layout_width="110dp"
+        android:layout_height="30dp"
+        android:id="@+id/post"
+         android:textSize="10pt"
+        />
+    <TextView
+        android:text="2000"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="-60dp"
+         android:layout_width="110dp"
+        android:layout_height="30dp"
+        android:id="@+id/liken"
+        android:textStyle="bold"
+        android:textSize="11pt"
+        />
+    <TextView
+        android:text="LIKES"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+         android:layout_width="110dp"
+        android:layout_height="30dp"
+        android:id="@+id/like"
+        android:textSize="10pt"
+        />
+    <TextView
+        android:text="200"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="-60dp"
+        android:layout_marginLeft="130dp"
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        android:id="@+id/followersn"
+        android:textStyle="bold"
+        android:textSize="11pt"
+        />
+
+
+    <TextView
+        android:text="FOLLOWERS"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="0dp"
+        android:layout_marginLeft="130dp"
+        android:layout_width="140dp"
+        android:layout_height="30dp"
+        android:id="@+id/followers"
+        android:textSize="9pt"
+        />
+
+        <TextView
+            android:text="Iron Man"
+            android:gravity="center"
+            android:layout_marginTop="-140dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/name"
+            android:textStyle="bold"
+            android:textSize="10pt"
+
+            />
+
+        <TextView
+        android:text="ain.com/iron0man"
+        android:gravity="center"
+        android:layout_marginTop="-10dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:id="@+id/link"
+        android:textStyle="normal"
+        android:textSize="10pt"
+        />
+
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginBottom="-100dp"
+
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="270dp"
+            android:orientation="vertical"
+            android:layout_marginTop="70dp"
+            >
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                />
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/tab3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+
+</LinearLayout>

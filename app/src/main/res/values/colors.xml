@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF0080</color>
+    <color name="colorPrimaryDark">#DF0174</color>
+    <color name="colorAccent">#FF0040</color>
+    <color name="colornavigationBar">#00aeef</color>
+    <color name="colornBack">#ffffff</color>
+    <color name="colornBackDark">#FFFFF9</color>
+    <color name="colorAccentLight">#FF0000</color>
+    <color name="FacebookColor">#3B5998</color>
+
+
+
+</resources>

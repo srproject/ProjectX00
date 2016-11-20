@@ -1,0 +1,46 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.sr.projectx.MainActivity">
+
+
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_login"
+        android:orderInCategory="100"
+        android:title="@string/title_activity_login"
+        android:onClick="loginclick"
+        app:showAsAction="never" />
+
+
+    <item android:id="@+id/action_search"
+        android:title="Search"
+        android:icon="@mipmap/ic_search_white_24dp"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView"
+        />
+
+
+
+
+    <item android:title="@string/action_settings"
+        android:icon="@drawable/ic_menu_manage"
+        >
+        <menu>
+            <item
+                android:id="@+id/action_settings"
+                android:orderInCategory="100"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/action_settings_aplication"
+                android:onClick="settingclick"/>
+            <item
+                android:id="@+id/action_settings_account"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="@string/action_settings_account"
+                android:onClick="acsettingclick"/>
+        </menu>
+    </item>
+
+
+
+</menu>
