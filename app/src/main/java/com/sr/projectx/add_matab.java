@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import static com.sr.projectx.R.id.fabeditphoto;
 
 public class add_matab extends AppCompatActivity {
     ImageView imageaddmatab;
@@ -28,7 +29,7 @@ public class add_matab extends AppCompatActivity {
         setSupportActionBar(toolbar);
         imageaddmatab=(ImageView) findViewById(R.id.imageaddmatab);
 
-         imageaddmatab.setOnClickListener(new View.OnClickListener() {
+        imageaddmatab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 

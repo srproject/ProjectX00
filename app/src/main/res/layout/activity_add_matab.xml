@@ -30,9 +30,27 @@
                 app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 
+
+
+
+
+
+
+
+
+
+
+            <ImageView
+                android:id="@+id/imageaddmatab"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_menu_camera" />
+
+
             <ImageView
                 android:layout_marginTop="5dp"
-                 android:layout_width="40dp"
+                android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_gravity="end|top"
                 android:layout_marginRight="25dp"
@@ -43,13 +61,6 @@
 
 
                 />
-
-            <ImageView
-                android:id="@+id/imageaddmatab"
-                android:layout_gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_menu_camera" />
 
 
         </android.support.design.widget.CollapsingToolbarLayout>
