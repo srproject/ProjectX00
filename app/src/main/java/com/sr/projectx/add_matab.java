@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import static com.sr.projectx.R.id.fabeditphoto;
 
 public class add_matab extends AppCompatActivity {
     ImageView imageaddmatab;

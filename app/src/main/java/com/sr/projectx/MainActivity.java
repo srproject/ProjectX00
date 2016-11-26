@@ -176,6 +176,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void mapclick(MenuItem item){
+        Intent myIntent = new Intent(MainActivity.this, Map.class);
+        MainActivity.this.startActivity(myIntent);
+
+    }
+
     public void loginclick(MenuItem item){
         Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
         MainActivity.this.startActivity(myIntent);
@@ -313,13 +319,11 @@ public class MainActivity extends AppCompatActivity {
                   MapActivity tab2=new MapActivity();
 
                     return  tab2;
+
                 case 2:
-                    CameraActivity tab3=new CameraActivity();
-                    return  tab3;
-                case 3:
                     NotifiActivity tab4=new NotifiActivity();
                     return  tab4;
-                case 4:
+                case 3:
                     ProfileActivity tab5=new ProfileActivity();
                     return  tab5;
 
@@ -333,7 +337,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 5;
+            return 4;
         }
 
         @Override
@@ -346,10 +350,8 @@ public class MainActivity extends AppCompatActivity {
                     return "Map";
 
                 case 2:
-                    return "cam ";
-                case 3:
                     return "not";
-                case 4:
+                case 3:
                     return "file";
             }
             return null;
