@@ -1,5 +1,8 @@
 <resources>
-    <string name="app_name">OnRoad</string>
+    <string name="app_name">ROADS</string>
+    <string name="page_notifi">NOTICES</string>
+    <string name="page_pro">PROFILE</string>
+
     <string name="action_settings">Settings</string>
     <string name="action_settings_aplication">Aplication Setting</string>
     <string name="action_settings_account">Account Setting</string>
@@ -19,6 +22,7 @@
 
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
+    <string name="prompt_Reenter_password">Reenter password</string>
     <string name="action_sign_in">Sign in</string>
     <string name="action_regi">Register With ProjectX </string>
     <string name="action_save">Save</string>
@@ -133,7 +137,8 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="title_activity_map">Map</string>
+    <string name="title_activity_add_matab">New Matab</string>
+    <string name="title_activity_gg">gg</string>
 
 </resources>
 

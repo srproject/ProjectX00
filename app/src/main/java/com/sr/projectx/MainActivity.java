@@ -2,6 +2,8 @@ package com.sr.projectx;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
@@ -24,7 +26,10 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.TabHost;
 import android.widget.TextView;
+
+import static com.sr.projectx.R.string.title_activity_maps;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,14 +46,17 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     FloatingActionButton fab2;
     FloatingActionButton fab3;
-     /**
+    TextView tv;
+    /**
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
 
 
-   TextView txh;
+    TextView txh;
     TabLayout tabLayout;
+    TabHost tabHost;
+
 
     private void animateFab(int position) {
         switch (position) {
@@ -56,24 +64,28 @@ public class MainActivity extends AppCompatActivity {
                 fab2.hide();
                 fab3.hide();
                 fab.show();
-                 break;
-            case 1:
-                 fab.hide();
-                fab2.hide();
-                fab3.show();
+                setTitle(R.string.app_name);
+
+
+
                 break;
 
-            case 2:
-                 fab.hide();
+
+            case 1:
+                fab.hide();
                 fab3.hide();
-                fab2.show();
+                fab2.hide();
+                setTitle(R.string.page_notifi);
+
                 break;
-            case 3:
-                 fab3.hide();
+            case 2:
+                fab3.hide();
                 fab2.hide();
                 fab.hide();
-                 break;
-            case 4:
+                setTitle(R.string.page_pro);
+
+                break;
+            case 3:
                 fab3.hide();
                 fab2.hide();
                 fab.hide();
@@ -82,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
             default:
                 fab.hide();
-                 break;
+                break;
         }
     }
     @Override
@@ -90,8 +102,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+        }
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+
+        getSupportActionBar().setHomeAsUpIndicator(R.mipmap.onroad_icon);
+     //   getActionBar().setHomeButtonEnabled(true);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -100,10 +124,24 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-          tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-          fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        View view0 = getLayoutInflater().inflate(R.layout.customtab, null);
+        view0.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_home_white_48dp);
+        tabLayout.getTabAt(0).setCustomView(view0);
+
+        View view1 = getLayoutInflater().inflate(R.layout.customtab, null);
+        view1.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_notifications_white_48dp);
+        tabLayout.getTabAt(1).setCustomView(view1);
+
+        View view2 = getLayoutInflater().inflate(R.layout.customtab, null);
+        view2.findViewById(R.id.icon).setBackgroundResource(R.mipmap.ic_account_circle_white_48dp);
+        tabLayout.getTabAt(2).setCustomView(view2);
+
+
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab2 = (FloatingActionButton) findViewById(R.id.fab2);
         fab3 = (FloatingActionButton) findViewById(R.id.fab3);
         final FloatingActionButton fab4 = (FloatingActionButton)  findViewById(R.id.fab4);
@@ -111,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
         fab3.hide();
         fab4.hide();
         fab2.hide();
-         fab.show();
+        fab.show();
         fab4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,8 +176,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                    Intent myIntent = new Intent(MainActivity.this, NotificationDisplayService.class);
-                    startService(myIntent);
+                Intent myIntent = new Intent(MainActivity.this, add_matab.class);
+                startActivity(myIntent);
 
 
 
@@ -174,11 +212,27 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-    }
 
-    public void mapclick(MenuItem item){
-        Intent myIntent = new Intent(MainActivity.this, Map.class);
-        MainActivity.this.startActivity(myIntent);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        //tab
+
+
 
     }
 
@@ -189,6 +243,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
+
+    public void mapclick(MenuItem item){
+        Intent myIntent = new Intent(MainActivity.this, MapActivity.class);
+        MainActivity.this.startActivity(myIntent);
+
+    }
     public void settingclick(MenuItem item){
         Intent myIntent = new Intent(MainActivity.this, SettingsActivity.class);
         MainActivity.this.startActivity(myIntent);
@@ -196,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void acsettingclick(MenuItem item){
         Intent myIntent = new Intent(MainActivity.this, EditprofileActivity.class);
-       startActivity(myIntent);
+        startActivity(myIntent);
 
     }
 
@@ -229,9 +290,7 @@ public class MainActivity extends AppCompatActivity {
         builder.append("\n Sync Frequency: "
                 + sharedPrefs.getString("prefSyncFrequency", "NULL"));
 
-        TextView settingsTextView = (TextView) findViewById(R.id.textViewH);
 
-        settingsTextView.setText(builder.toString());
     }
 
 
@@ -311,50 +370,45 @@ public class MainActivity extends AppCompatActivity {
             switch (position) {
                 case 0:
 
-                    HomeActivity tab1=new HomeActivity();
+                    HomeActivity tab0=new HomeActivity();
 
-                    return  tab1;
+                    return  tab0;
+
                 case 1:
-
-                  MapActivity tab2=new MapActivity();
-
-                    return  tab2;
-
+                    NotifiActivity tab1=new NotifiActivity();
+                    return  tab1;
                 case 2:
-                    NotifiActivity tab4=new NotifiActivity();
-                    return  tab4;
-                case 3:
-                    ProfileActivity tab5=new ProfileActivity();
-                    return  tab5;
+                    ProfileActivity tab2=new ProfileActivity();
+                    return  tab2;
 
 
                 default:
 
                     return  null;
             }
-         }
+        }
 
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 4;
+            return 3;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                     return "Home";
+                    return null;
                 case 1:
 
-                    return "Map";
+                    return null;
 
                 case 2:
-                    return "not";
-                case 3:
-                    return "file";
+                    return null;
+
+
             }
             return null;
         }
-            }
+    }
 }

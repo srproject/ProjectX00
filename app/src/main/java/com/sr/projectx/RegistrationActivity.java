@@ -57,7 +57,7 @@ public class RegistrationActivity extends AppCompatActivity {
         }
         else
         {
-            Toast.makeText(getApplicationContext(), "Picture NOt taken", Toast.LENGTH_LONG);
+            Toast.makeText(getApplicationContext(), "Picture Not taken", Toast.LENGTH_LONG);
         }
     }
 }

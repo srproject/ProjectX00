@@ -1,5 +1,6 @@
 package com.sr.projectx;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Camera;
@@ -12,10 +13,19 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
+
+import java.io.FileOutputStream;
+
 import static com.sr.projectx.R.id.fabeditphoto;
 
 public class add_matab extends AppCompatActivity {
+
+    public GoogleMap mMap;
     ImageView imageaddmatab;
+    ImageView samplemap;
+    FloatingActionButton fabloc;
     int CAMERA_PIC_REQUEST = 2;
     int  TAKE_PICTURE=0;
     Camera camera;
@@ -27,8 +37,10 @@ public class add_matab extends AppCompatActivity {
         setContentView(R.layout.activity_add_matab);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        imageaddmatab=(ImageView) findViewById(R.id.imageaddmatab);
 
+        imageaddmatab=(ImageView) findViewById(R.id.imageaddmatab);
+        samplemap  =(ImageView) findViewById(R.id.samplemap);
+        fabloc=(FloatingActionButton) findViewById(R.id.fabloc);
         imageaddmatab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,11 +54,42 @@ public class add_matab extends AppCompatActivity {
         });
 
 
+        fabloc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent locIntent = new Intent(getApplication(),MapActivity.class);
+                 startActivity(locIntent);
+
+
+
+            }
+        });
+        Intent intent = getIntent();
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            bitmap = (Bitmap) intent.getParcelableExtra("sample_name");
+            samplemap.setImageBitmap(bitmap);
+
+        }
+
+
 
 
 
     }
 
+    public static Bitmap scaleDownBitmap(Bitmap photo, int newHeight, Context context) {
+
+        final float densityMultiplier = context.getResources().getDisplayMetrics().density;
+
+        int h= (int) (newHeight*densityMultiplier);
+        int w= (int) (h * photo.getWidth()/((double) photo.getHeight()));
+
+        photo=Bitmap.createScaledBitmap(photo, w, h, true);
+
+        return photo;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
