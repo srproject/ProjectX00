@@ -3,8 +3,10 @@ package com.sr.projectx;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Camera;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +18,9 @@ import android.widget.Toast;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.SnapshotReadyCallback;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 import static com.sr.projectx.R.id.fabeditphoto;
@@ -38,6 +43,8 @@ public class add_matab extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
         imageaddmatab=(ImageView) findViewById(R.id.imageaddmatab);
         samplemap  =(ImageView) findViewById(R.id.samplemap);
         fabloc=(FloatingActionButton) findViewById(R.id.fabloc);
@@ -50,6 +57,7 @@ public class add_matab extends AppCompatActivity {
                 startActivityForResult(cameraIntent, CAMERA_PIC_REQUEST);
 
 
+
             }
         });
 
@@ -59,23 +67,47 @@ public class add_matab extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent locIntent = new Intent(getApplication(),MapActivity.class);
-                 startActivity(locIntent);
+                startActivity(locIntent);
 
+
+                //loadImageFromStorage();
 
 
             }
         });
-        Intent intent = getIntent();
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            bitmap = (Bitmap) intent.getParcelableExtra("sample_name");
-            samplemap.setImageBitmap(bitmap);
 
+
+
+
+
+
+    }
+
+    private void loadImageFromStorage( )
+    {
+        String appname =  getString(R.string.app_name);
+
+
+        try {
+
+                File f = new File(Environment.getExternalStorageDirectory() + File.separator + "/" + appname + "/Image/location_add.png");
+            if(f.exists()) {
+
+            Bitmap b = BitmapFactory.decodeStream(new FileInputStream(f));
+
+                samplemap.setImageBitmap(b);
+            }
+            else {
+                //Intent locIntent = new Intent(getApplication(),MapActivity.class);
+               //startActivity(locIntent);
+
+
+            }
         }
-
-
-
-
+        catch (FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
 
     }
 
@@ -103,6 +135,15 @@ public class add_matab extends AppCompatActivity {
         else
         {
             Toast.makeText(getApplicationContext(), "Picture NOt taken", Toast.LENGTH_LONG);
+        }
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if( MapActivity.activityPaused()==true){
+            loadImageFromStorage();
+            Toast.makeText(getApplicationContext(), "Update Location", Toast.LENGTH_LONG).show();
+
         }
     }
 }

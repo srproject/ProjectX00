@@ -6,7 +6,10 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Environment;
+import android.os.Handler;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -63,28 +66,32 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                 CaptureMapScreen();
                 imageloclocloc.setImageBitmap(bitmap);
 
-
-                imageloclocloc.buildDrawingCache();
-                bbb = imageloclocloc.getDrawingCache();
-
             }
         });
         set_button.setOnLongClickListener(new View.OnLongClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
             @Override
             public boolean onLongClick(View view) {
 
 
-                Bitmap bmap =   scaleDownBitmap(bitmap,10,getApplicationContext());
-               // Intent intent = new Intent(getApplicationContext(), add_matab.class);
+                // Intent intent = new Intent(getApplicationContext(), add_matab.class);
                 // intent.putExtra("sample_name", bbb);
                // setResult(RESULT_OK, intent);
                // startActivity(intent);
-                try {
-                    saveImage(bitmap );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
 
+                    if(bitmap!=null) {
+                        try {
+                            saveImage(bitmap);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                        else {
+                        bitmap=null;
+
+                        Toast.makeText(getApplicationContext(), "No Image", Toast.LENGTH_SHORT).show();
+
+                    }
 
                 return false;
             }
@@ -96,12 +103,24 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
     private void saveImage(Bitmap bitmap) throws IOException {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 40, bytes);
-        File f = new File(Environment.getExternalStorageDirectory() + File.separator + "test.png");
-        f.createNewFile();
-        FileOutputStream fo = new FileOutputStream(f);
-        fo.write(bytes.toByteArray());
-        fo.close();
+        String appname =  getString(R.string.app_name);
+        File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "/"+appname+"/Image/");
+        if (!folder.exists()) {
+            folder.mkdirs();
+            Toast.makeText(getApplicationContext(), "Folder Maked", Toast.LENGTH_SHORT).show();
 
+        }else {
+            File f2 = new File(Environment.getExternalStorageDirectory() + File.separator + "/"+appname+"/Image/location_add.png");
+
+
+            f2.createNewFile();
+            FileOutputStream fo = new FileOutputStream(f2);
+            fo.write(bytes.toByteArray());
+            fo.close();
+            Toast.makeText(getApplicationContext(), "Image Saved", Toast.LENGTH_LONG).show();
+
+
+        }
     }
 
 
@@ -131,8 +150,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
                     // TODO Auto-generated method stub
                     bitmap = snapshot;
                     try {
-                        saveImage(bitmap);
-                        Toast.makeText(getApplicationContext(), "Image Saved", Toast.LENGTH_LONG).show();
+                        //saveImage(bitmap);
+                      //  Toast.makeText(getApplicationContext(), "Image Saved", Toast.LENGTH_LONG).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -223,5 +242,23 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback 
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(HAMBURG, 15));
 
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10), 2000, null);
+    }
+    private static boolean isInBackground;
+    private static boolean isAwakeFromBackground;
+    private static final int backgroundAllowance = 10000;
+
+    public static boolean activityPaused() {
+        isInBackground = true;
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (isInBackground) {
+                    isAwakeFromBackground = true;
+                }
+            }
+        }, backgroundAllowance);
+return true;
+
     }
 }
