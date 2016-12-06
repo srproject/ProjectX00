@@ -182,7 +182,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 app:srcCompat="@mipmap/hero"
-                android:id="@+id/imageNoti"
+                android:id="@+id/imageNoti2"
                 app:cardCornerRadius="50dp"
                 android:layout_marginBottom="30dp"
 
@@ -319,7 +319,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 app:srcCompat="@mipmap/hero"
-                android:id="@+id/imageNoti"
+                android:id="@+id/imageNoti3"
                 app:cardCornerRadius="50dp"
                 android:layout_marginBottom="30dp"
 
@@ -456,7 +456,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 app:srcCompat="@mipmap/hero"
-                android:id="@+id/imageNoti"
+                android:id="@+id/imageNoti4"
                 app:cardCornerRadius="50dp"
                 android:layout_marginBottom="30dp"
 
@@ -593,7 +593,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 app:srcCompat="@mipmap/hero"
-                android:id="@+id/imageNoti"
+                android:id="@+id/imageNoti5"
                 app:cardCornerRadius="50dp"
                 android:layout_marginBottom="30dp"
 
@@ -730,7 +730,7 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 app:srcCompat="@mipmap/hero"
-                android:id="@+id/imageNoti"
+                android:id="@+id/imageNoti6"
                 app:cardCornerRadius="50dp"
                 android:layout_marginBottom="30dp"
 

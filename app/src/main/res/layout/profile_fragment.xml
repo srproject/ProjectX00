@@ -33,7 +33,7 @@
             >
 
             <ImageView
-                android:id="@+id/imageView0"
+                android:id="@+id/imageViewprofile"
                 android:layout_gravity="center"
                 android:layout_width="380dp"
                 android:layout_height="200dp"

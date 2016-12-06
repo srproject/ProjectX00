@@ -120,11 +120,7 @@
 
             >
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                >
+
 
                 <EditText
                     android:id="@+id/timematab"
@@ -139,9 +135,11 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="time"
                     android:maxLines="1"
+                    android:onClick="addtimec"
+                    android:windowSoftInputMode="stateHidden|adjustResize"
+
                     />
 
-            </android.support.design.widget.TextInputLayout>
 
         </android.support.v7.widget.CardView>
 
@@ -169,11 +167,7 @@
 
             >
 
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="5dp"
-                >
+
 
                 <EditText
                     android:id="@+id/datematab"
@@ -188,9 +182,9 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="date"
                     android:maxLines="1"
+                    android:windowSoftInputMode="stateHidden|adjustResize"
                     />
 
-            </android.support.design.widget.TextInputLayout>
 
         </android.support.v7.widget.CardView>
 

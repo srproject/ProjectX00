@@ -1,35 +1,41 @@
 package com.sr.projectx;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Build;
+import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
-import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.Animation;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.ScaleAnimation;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import static com.sr.projectx.R.string.title_activity_maps;
+import java.io.File;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,12 +47,16 @@ public class MainActivity extends AppCompatActivity {
      * may be best to switch to a
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
+    private static final int  REQUEST_ACCESS_FINE_LOCATION = 111;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private static final int RESULT_SETTINGS = 1;
     FloatingActionButton fab;
     FloatingActionButton fab2;
     FloatingActionButton fab3;
     TextView tv;
+
+    PackageInfo info;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -100,11 +110,91 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //FacebookSdk.sdkInitialize(getApplicationContext());
+        //AppEventsLogger.activateApp(this);
+
         setContentView(R.layout.activity_main);
+        checkfolder();
+       // if(AccessToken.getCurrentAccessToken() == null) {
+        //    goLoginScreen();
+      //  }
+
+        ////////
+
+
+        try {
+            info = getPackageManager().getPackageInfo("com.sr.projectx", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md;
+                md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                String something = new String(Base64.encode(md.digest(), 0));
+                //String something = new String(Base64.encodeBytes(md.digest()));
+                Log.e("hash key", something);
+            }
+        } catch (PackageManager.NameNotFoundException e1) {
+            Log.e("name not found", e1.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("no such an algorithm", e.toString());
+        } catch (Exception e) {
+            Log.e("exception", e.toString());
+        }
+
+
+        ///////
+
+
+
+
+        boolean hasPermissionLocation = (ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED);
+        if (!hasPermissionLocation) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_ACCESS_FINE_LOCATION);
+        }
+
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
             requestPermissions(new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 2);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_COARSE_LOCATION}, 3);
+            requestPermissions(new String[]{Manifest.permission.LOCATION_HARDWARE}, 1);
+            requestPermissions(new String[]{Manifest.permission.ACCESS_LOCATION_EXTRA_COMMANDS}, 1);
+             requestPermissions(new String[]{Manifest.permission.CONTROL_LOCATION_UPDATES}, 1);
+             requestPermissions(new String[]{Manifest.permission.INSTALL_LOCATION_PROVIDER}, 1);
+
+
+        }
+
+
+        String[] mPermission = {Manifest.permission.READ_CONTACTS, Manifest.permission.READ_SMS,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION};
+
+        int permissionCheck = ContextCompat.checkSelfPermission(getApplicationContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+
+        if (ContextCompat.checkSelfPermission(getApplicationContext(),
+                android.Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+
+                // No explanation needed, we can request the permission.
+
+
+            }
         }
 
 
@@ -411,4 +501,53 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
+    static final int MY_PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1;
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode)
+        {
+
+            case REQUEST_ACCESS_FINE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Toast.makeText(MainActivity.this, "Thank You Sir", Toast.LENGTH_SHORT).show();
+
+                    //reload my activity with permission granted
+                    finish();
+                    startActivity(getIntent());
+
+                } else
+                {
+                    Toast.makeText(MainActivity.this, "The app was not work well. Please get this permission", Toast.LENGTH_LONG).show();
+                }
+            }
+
+        }
+
+    }
+
+
+    private void goLoginScreen() {
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
+
+    //check folder
+
+
+    public void checkfolder(){
+        String appname = getString(R.string.app_name);
+
+        File folder = new File(Environment.getExternalStorageDirectory() + File.separator + "/" + appname + "/Image/");
+
+        if (!folder.exists()) {
+            folder.mkdirs();
+
+        }
+    }
+
+
 }
